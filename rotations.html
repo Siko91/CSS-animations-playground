@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1000, initial-scale=1.0">
+    <title>Rotations</title>
+</head>
+<style>
+    #wrapper {
+        border: 1px solid black;
+        height: 700px;
+        margin: 50px;
+    }
+    #ballStartPosition{
+        position: absolute;
+        left: calc(50% - 85px);
+        top: 300px;
+    }
+    .ball {
+        background-image: url("./ball.png");
+        background-size: 100% 100%;
+        height: 170px;
+        width: 170px;
+        position: absolute;
+        animation-iteration-count: 1;
+        border: 4px solid black;
+    }
+
+    .ball.flipped {
+        background-image: url("./ball-flipped.png");
+    }
+
+    .ball.right.down { position: absolute; top:50px; left:50px;  transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.right.up { position: absolute; top:-50px; left:50px;   transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.left.up { position: absolute; top:-50px; left:-50px;   transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.left.down { position: absolute; top:50px; left:-50px;  transition:left 0.8s linear; transition:top 0.8s linear;}
+
+    .ball.overlap.right.down { position: absolute; top:0; left:0;  transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.overlap.right.up { position: absolute; top:0; left:0;   transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.overlap.left.up { position: absolute; top:0; left:0;   transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.overlap.left.down { position: absolute; top:0; left:0;  transition:left 0.8s linear; transition:top 0.8s linear;}
+
+    .ball.scale_small.rotate_45deg { animation-name: scale_small, rotate_45deg; }
+    .ball.scale_small.rotate_45deg_reversed { animation-name: scale_small, rotate_45deg_negative; }
+    .ball.scale_small.rotate_90deg { animation-name: scale_small, rotate_90deg; }
+    .ball.scale_small.rotate_90deg_reversed { animation-name: scale_small, rotate_90deg_negative; }
+    .ball.scale_small.rotate_270deg { animation-name: scale_small, rotate_270deg; }
+    .ball.scale_small.rotate_270deg_reversed { animation-name: scale_small, rotate_270deg_negative; }
+    
+    .ball.rotate_45deg { animation-name:rotate_45deg; }
+    .ball.rotate_45deg_reversed { animation-name:rotate_45deg_negative; }
+    .ball.rotate_90deg { animation-name:rotate_90deg; }
+    .ball.rotate_90deg_reversed { animation-name:rotate_90deg_negative; }
+    .ball.rotate_270deg { animation-name:rotate_270deg; }
+    .ball.rotate_270deg_reversed { animation-name:rotate_270deg_negative; }
+    
+    .ball.scale_big.rotate_45deg { animation-name: scale_big, rotate_45deg; }
+    .ball.scale_big.rotate_45deg_reversed { animation-name: scale_big, rotate_45deg_negative; }
+    .ball.scale_big.rotate_90deg { animation-name: scale_big, rotate_90deg; }
+    .ball.scale_big.rotate_90deg_reversed { animation-name: scale_big, rotate_90deg_negative; }
+    .ball.scale_big.rotate_270deg { animation-name: scale_big, rotate_270deg; }
+    .ball.scale_big.rotate_270deg_reversed { animation-name: scale_big, rotate_270deg_negative; }
+    
+    .ball.speed2s { animation-duration: 2000ms; }
+    .ball.speed3s { animation-duration: 3000ms; }
+    .ball.speed4s { animation-duration: 4000ms; }
+    .ball.speed5s { animation-duration: 5000ms; }
+
+    .ball.linearCurve { animation-timing-function: linear; }
+    .ball.easeCurve { animation-timing-function: ease; }
+    .ball.wild1 { animation-timing-function: cubic-bezier(.36,1.48,.54,-0.71); }
+    .ball.wild2 { animation-timing-function: cubic-bezier(1,.01,0,.98); }
+    .ball.wild3 { animation-timing-function: cubic-bezier(.53,-0.56,.38,1.49); }
+    .ball.wild3 { animation-timing-function: cubic-bezier(1,.43,.38,1.49); }
+
+    @keyframes rotate_45deg { 50% { -moz-transform: rotate(45deg);  transform:rotate(45deg);} 100% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_45deg_negative { 50% { -moz-transform: rotate(-45deg);  transform:rotate(-45deg);} 100% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_90deg { 50% { -moz-transform: rotate(90deg);  transform:rotate(90deg);} 100% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_90deg_negative { 50% { -moz-transform: rotate(-90deg);  transform:rotate(-90deg);} 100% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_270deg { 50% { -moz-transform: rotate(270deg);  transform:rotate(270deg);} 100% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_270deg_negative { 50% { -moz-transform: rotate(-270deg);  transform:rotate(-270deg);} 100% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+
+    @keyframes scale_small { 50% { width:85px; height:85px; } 100% { width:170px; height:170px; } }
+    @keyframes scale_big { 50% { width:340px; height:340px; } 100% { width:170px; height:170px; } }
+
+</style>
+<body>
+    <div id="wrapper">
+        <div id="ballStartPosition">
+        </div>
+    </div>
+
+    <script>
+        
+        var possibleAnimations = [
+            "rotate_45deg",
+            "rotate_45deg_reversed",
+            "rotate_90deg",
+            "rotate_90deg_reversed",
+            "rotate_270deg",
+            "rotate_270deg_reversed",
+        ]
+
+        var possibleMirroring = [
+            true, true, true, false // 3 times out of 4 there will be mirroring
+        ]
+
+        var oppositeAnimations = {
+            "rotate_45deg": "rotate_45deg_reversed",
+            "rotate_45deg_reversed": "rotate_45deg",
+            "rotate_90deg": "rotate_90deg_reversed",
+            "rotate_90deg_reversed": "rotate_90deg",
+            "rotate_270deg": "rotate_270deg_reversed",
+            "rotate_270deg_reversed": "rotate_270deg",
+        }
+
+        var possibleSpeeds = {
+            "speed2s":2000,
+            "speed3s":3000,
+            "speed4s":4000,
+            "speed5s":5000,
+        }
+
+        var possibleScales = [
+            "scale_small",
+            "scale_normal",
+            "scale_big",
+        ]
+
+        var possibleAnimationCurves = [
+            "linearCurve", "easeCurve", "linearCurve", "easeCurve",
+            "wild1", "wild2", "wild3", "wild4",
+        ]
+
+        var possibleOverlap = [
+            false, true
+        ]
+
+
+        loop();
+
+        function loop() {
+            var parent = document.getElementById("ballStartPosition");
+            ballHtml = [
+                '<div class="ball right down"></div>',
+                '<div class="ball right up invertAnimation"></div>',
+                '<div class="ball left up flipped"></div>',
+                '<div class="ball left down invertAnimation flipped"></div>',
+            ]
+            parent.innerHTML = ballHtml.join("\n");
+
+            var animation = randomItem(possibleAnimations);
+            var shouldMirror = randomItem(possibleMirroring);
+            var speed = randomItem(Object.keys(possibleSpeeds));
+            var waitTime = possibleSpeeds[speed];
+            var curve = randomItem(possibleAnimationCurves);
+            var scale = randomItem(possibleScales);
+            var overlap = randomItem(possibleOverlap);
+
+            var balls = document.querySelectorAll(".ball");
+
+            balls.forEach(b=>{
+                var invert = shouldMirror && b.classList.contains("invertAnimation");
+                b.classList.add(invert? oppositeAnimations[animation] : animation);
+                b.classList.add(speed);
+                b.classList.add(curve);
+                b.classList.add(scale);
+            })
+
+            if (overlap) {
+                setTimeout(() => balls.forEach(b=>b.classList.add("overlap")), 20);
+                setTimeout(() => balls.forEach(b=>b.classList.remove("overlap")), waitTime/2);
+            }
+
+            setTimeout(() => loop(), waitTime + 150);
+        }
+
+        function randomItem(arr) {
+            var i = Math.floor(Math.random() * arr.length);
+            return arr[i];
+        }
+
+    </script>
+</body>
+</html>
