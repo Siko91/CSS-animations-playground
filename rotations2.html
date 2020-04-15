@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rotations</title>
+</head>
+<style>
+    #wrapper {
+        border: 1px solid black;
+        height: 30vw;
+        margin: auto;
+        margin-top:10vw;
+        width: 80vw;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+    }
+    .animationContainer{
+        height:10vw;
+        width:10vw;
+    }
+    .ballStartPosition{
+        position: absolute;
+    }
+    .ball {
+        background-image: url("./ball.png");
+        background-size: 100% 100%;
+        height: 5vw;
+        width: 5vw;
+        position: absolute;
+        animation-iteration-count: 1;
+        border: 4px solid black;
+    }
+
+    .ball.flipped {
+        background-image: url("./ball-flipped.png");
+    }
+
+    .ball.right.down { position: absolute; top:2.5vw; left:2.5vw;  transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.right.up { position: absolute; top:-2.5vw; left:2.5vw;   transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.left.up { position: absolute; top:-2.5vw; left:-2.5vw;   transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.left.down { position: absolute; top:2.5vw; left:-2.5vw;  transition:left 0.8s linear; transition:top 0.8s linear;}
+
+    .ball.overlap.right.down { position: absolute; top:0; left:0;  transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.overlap.right.up { position: absolute; top:0; left:0;   transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.overlap.left.up { position: absolute; top:0; left:0;   transition:left 0.8s linear; transition:top 0.8s linear;}
+    .ball.overlap.left.down { position: absolute; top:0; left:0;  transition:left 0.8s linear; transition:top 0.8s linear;}
+    
+    .ball.rotate_45deg { animation-name:rotate_45deg; }
+    .ball.rotate_45deg_reversed { animation-name:rotate_45deg_negative; }
+    .ball.rotate_90deg { animation-name:rotate_90deg; }
+    .ball.rotate_90deg_reversed { animation-name:rotate_90deg_negative; }
+    .ball.rotate_270deg { animation-name:rotate_270deg; }
+    .ball.rotate_270deg_reversed { animation-name:rotate_270deg_negative; }
+    .ball.rotate_900deg { animation-name:rotate_900deg; }
+    .ball.rotate_900deg_reversed { animation-name:rotate_900deg_negative; }
+    
+    .ball.speed2s { animation-duration: 2000ms; }
+    .ball.speed3s { animation-duration: 3000ms; }
+    .ball.speed4s { animation-duration: 4000ms; }
+    .ball.speed5s { animation-duration: 5000ms; }
+
+    .ball.linearCurve { animation-timing-function: linear; }
+    .ball.easeCurve { animation-timing-function: ease; }
+    .ball.wild1 { animation-timing-function: cubic-bezier(.36,1.48,.54,-0.71); }
+    .ball.wild2 { animation-timing-function: cubic-bezier(1,.01,0,.98); }
+    .ball.wild3 { animation-timing-function: cubic-bezier(.53,-0.56,.38,1.49); }
+    .ball.wild3 { animation-timing-function: cubic-bezier(1,.43,.38,1.49); }
+
+    @keyframes rotate_45deg { 50% { -moz-transform: rotate(45deg);  transform:rotate(45deg);} 85% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_45deg_negative { 50% { -moz-transform: rotate(-45deg);  transform:rotate(-45deg);} 85% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_90deg { 50% { -moz-transform: rotate(90deg);  transform:rotate(90deg);} 85% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_90deg_negative { 50% { -moz-transform: rotate(-90deg);  transform:rotate(-90deg);} 85% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_270deg { 50% { -moz-transform: rotate(270deg);  transform:rotate(270deg);} 85% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_270deg_negative { 50% { -moz-transform: rotate(-270deg);  transform:rotate(-270deg);} 85% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_900deg { 50% { -moz-transform: rotate(900deg);  transform:rotate(900deg);} 85% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+    @keyframes rotate_900deg_negative { 50% { -moz-transform: rotate(-900deg);  transform:rotate(-900deg);} 85% { -moz-transform: rotate(0deg); transform:rotate(0deg); } }
+
+</style>
+<body>
+    <div id="wrapper">
+        <div class="animationContainer cornerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer centerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer centerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer cornerPosition"> <div class="ballStartPosition"></div> </div>
+
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer centerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer centerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer centerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer centerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+
+        <div class="animationContainer cornerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer centerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer centerPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer normalPosition"> <div class="ballStartPosition"></div> </div>
+        <div class="animationContainer cornerPosition"> <div class="ballStartPosition"></div> </div>
+    </div>
+
+    <script>
+        
+        var possibleAnimations = [
+            "rotate_45deg",
+            "rotate_45deg_reversed",
+            "rotate_90deg",
+            "rotate_90deg_reversed",
+            "rotate_270deg",
+            "rotate_270deg_reversed",
+            "rotate_900deg",
+            "rotate_900deg_reversed",
+        ]
+
+        var possibleMirroring = [
+            true, true, true, false // 3 times out of 4 there will be mirroring
+        ]
+
+        var oppositeAnimations = {
+            "rotate_45deg": "rotate_45deg_reversed",
+            "rotate_45deg_reversed": "rotate_45deg",
+            "rotate_90deg": "rotate_90deg_reversed",
+            "rotate_90deg_reversed": "rotate_90deg",
+            "rotate_270deg": "rotate_270deg_reversed",
+            "rotate_270deg_reversed": "rotate_270deg",
+            "rotate_900deg": "rotate_900deg_reversed",
+            "rotate_900deg_reversed": "rotate_900deg",
+        }
+
+        var possibleSpeeds = {
+            "speed2s":2000,
+            "speed3s":3000,
+            "speed4s":4000,
+            "speed5s":5000,
+        }
+
+        var possibleAnimationCurves = [
+            "linearCurve", "easeCurve", "linearCurve", "easeCurve",
+            "wild1", "wild2", "wild3", "wild4",
+        ]
+
+        var possibleOverlap = [
+            false, true
+        ]
+
+        var possibleSelectors = [
+            ["normalPosition"],
+            ["cornerPosition"],
+            ["centerPosition"],
+            ["cornerPosition", "normalPosition"],
+            ["cornerPosition", "centerPosition"],
+            ["centerPosition", "normalPosition"],
+            ["cornerPosition", "centerPosition", "normalPosition"],
+        ]
+
+        loop();
+
+        function loop() {
+            var parents = document.querySelectorAll(".ballStartPosition");
+            ballHtml = [
+                '<div class="ball right down"></div>',
+                '<div class="ball right up invertAnimation"></div>',
+                '<div class="ball left up flipped"></div>',
+                '<div class="ball left down invertAnimation flipped"></div>',
+                '<div class="ball center"></div>',
+            ]
+            for (let i = 0; i < parents.length; i++) {
+                parents[i].innerHTML = ballHtml.join("\n");
+            }
+
+            var speed = randomItem(Object.keys(possibleSpeeds));
+            var waitTime = possibleSpeeds[speed];
+
+            var selecors = randomItem(possibleSelectors);
+            for (let i = 0; i < selecors.length; i++) {
+                var balls = document.querySelectorAll("." + selecors[i] + " .ball");
+
+                var animation = randomItem(possibleAnimations);
+                var shouldMirror = randomItem(possibleMirroring);
+                var curve = randomItem(possibleAnimationCurves);
+                var overlap = randomItem(possibleOverlap);
+
+                balls.forEach(b=>{
+                    var invert = shouldMirror && b.classList.contains("invertAnimation");
+                    b.classList.add(invert? oppositeAnimations[animation] : animation);
+                    b.classList.add(speed);
+                    b.classList.add(curve);
+                })
+            }
+
+            if (overlap) {
+                setTimeout(() => balls.forEach(b=>b.classList.add("overlap")), 20);
+                setTimeout(() => balls.forEach(b=>b.classList.remove("overlap")), waitTime/2);
+            }
+
+            setTimeout(() => loop(), waitTime + 150);
+        }
+
+        function randomItem(arr) {
+            var i = Math.floor(Math.random() * arr.length);
+            return arr[i];
+        }
+
+    </script>
+</body>
+</html>
